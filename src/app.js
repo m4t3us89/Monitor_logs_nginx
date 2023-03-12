@@ -11,18 +11,18 @@ import { Server } from 'socket.io'
 const io = new Server(server);
 
 import { URL } from 'url'; 
-const __filename = new URL('../public/', import.meta.url).pathname;
+const __dirname = new URL('../public/', import.meta.url).pathname;
 
-const dir = process.env.DIR_FILE
+const __dirfile = process.env.DIR_FILE
 
 import { spawn } from 'node:child_process'
 
 app.get('/', (req, res) => {
-    res.sendFile(__filename + 'index.html');
+    res.sendFile(__dirname + 'index.html');
 });
 
 io.on('connection', (socket) => {
-    const tail = spawn('tail', ['-f', dir]);
+    const tail = spawn('tail', ['-f', __dirfile]);
     console.log('a user connected');
 
     socket.on('disconnect', () => {
@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
 
 
 server.listen(3000, () => {
-    console.log('listening on *:8081');
+    console.log('listening on *:3000');
 });
 
 
